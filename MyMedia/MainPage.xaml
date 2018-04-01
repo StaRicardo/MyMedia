@@ -8,6 +8,31 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            
+        </Grid.RowDefinitions>
+
+        <AppBarButton x:Name="OpenFileButton"
+                      Margin= "12" Icon="OpenFile"
+                      Background="White" 
+                      Grid.Row="0" 
+                      Click="AppBarButton_Click"/>
+        <Grid Grid.Row="1">
+            <Grid.Background>
+                <ImageBrush ImageSource="Assets/1214905.jpg" Opacity="1.0" />
+            </Grid.Background>
+            
+            <MediaPlayerElement Name="MyMedia"
+                            Margin="12"
+                            IsEnabled="True"
+                            AutoPlay="False"
+			                AreTransportControlsEnabled="True"
+                            Grid.Row="1"></MediaPlayerElement>
+        
+        </Grid>
+        
 
     </Grid>
 </Page>
