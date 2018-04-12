@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Threading.Tasks;
 using Windows.Media.Core;
 using Windows.Media.Playback;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Windows.Web.Http;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
 
@@ -32,7 +25,7 @@ namespace MyMedia
 
         
 
-        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void OpenFileButton_Click(object sender, RoutedEventArgs e)
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
@@ -51,5 +44,49 @@ namespace MyMedia
                 
             }
         }
+
+        private void Play_On_Net_Button_Click(object sender, RoutedEventArgs e)
+        {
+            MyMediaPlayer.Source = MediaSource.CreateFromUri(new Uri("http://www.neu.edu.cn/indexsource/neusong.mp3")); 
+            
+            MyMedia.SetMediaPlayer(MyMediaPlayer);
+            MyMediaPlayer.Play();
+        }
+
+        private async void loadButton_Click(object sender, RoutedEventArgs e)
+        {
+            StorageFile LoadFile = await Load();
+            if(LoadFile != null)
+            {
+                var mediaSource = MediaSource.CreateFromStorageFile(LoadFile);
+                MyMediaPlayer.Source = mediaSource;
+                MyMedia.SetMediaPlayer(MyMediaPlayer);
+                MyMediaPlayer.Play();
+            }
+            
+
+        }
+
+        public async Task<StorageFile> Load()
+        {
+            try
+            {
+                var httpClient = new HttpClient();
+                var buffer = await httpClient.GetBufferAsync(new Uri("http://www.neu.edu.cn/indexsource/neusong.mp3"));
+                if (buffer != null && buffer.Length > 0u)
+                {
+                    var file = await ApplicationData.Current.LocalCacheFolder.CreateFileAsync("1771.mp3", CreationCollisionOption.ReplaceExisting);
+                    using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                    {
+                        await stream.WriteAsync(buffer);
+                        await stream.FlushAsync();
+                    }
+                    return file;
+                }
+            }
+            catch { }
+            return null;
+        }
+
     }
 }

@@ -13,26 +13,45 @@
             <RowDefinition Height="*"></RowDefinition>
             
         </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Name="OpenFileButton"
+                          FontFamily="Segoe MDL2 Assets" 
+                          FontSize="24" 
+                          Content="&#59621;"
+                          Margin= "12"
+                          Background="White" 
+                          Grid.Row="0" 
+                          Click="OpenFileButton_Click"/>
+            <Button Name="LoadButton"
+                          FontFamily="Segoe MDL2 Assets" 
+                          FontSize="24" 
+                          Content="&#59542;"
+                          Margin= "12"
+                          Background="White" 
+                          Grid.Row="0" 
+                          Click="loadButton_Click"/>
+            <Button Name="Play_On_Net_Button"
+                          FontFamily="Segoe MDL2 Assets" 
+                          FontSize="24" 
+                          Content="&#59733;"
+                          Margin= "12"
+                          Background="White" 
+                          Grid.Row="0" 
+                          Click="Play_On_Net_Button_Click"/>
+        </StackPanel>
 
-        <AppBarButton x:Name="OpenFileButton"
-                      Margin= "12" Icon="OpenFile"
-                      Background="White" 
-                      Grid.Row="0" 
-                      Click="AppBarButton_Click"/>
         <Grid Grid.Row="1">
             <Grid.Background>
                 <ImageBrush ImageSource="Assets/1214905.jpg" Opacity="1.0" />
             </Grid.Background>
-            
+
             <MediaPlayerElement Name="MyMedia"
                             Margin="12"
                             IsEnabled="True"
                             AutoPlay="False"
 			                AreTransportControlsEnabled="True"
                             Grid.Row="1"></MediaPlayerElement>
-        
-        </Grid>
-        
 
+        </Grid>
     </Grid>
 </Page>
