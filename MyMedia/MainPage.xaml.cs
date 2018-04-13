@@ -75,7 +75,7 @@ namespace MyMedia
                 var buffer = await httpClient.GetBufferAsync(new Uri("http://www.neu.edu.cn/indexsource/neusong.mp3"));
                 if (buffer != null && buffer.Length > 0u)
                 {
-                    var file = await ApplicationData.Current.LocalCacheFolder.CreateFileAsync("1771.mp3", CreationCollisionOption.ReplaceExisting);
+                    var file = await KnownFolders.MusicLibrary.CreateFileAsync("neusong.mp3", CreationCollisionOption.ReplaceExisting);
                     using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
                     {
                         await stream.WriteAsync(buffer);
